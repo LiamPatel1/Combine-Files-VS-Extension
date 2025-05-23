@@ -1,0 +1,49 @@
+using Microsoft.VisualStudio;
+using Microsoft.VisualStudio.Shell;
+using Microsoft.VisualStudio.Shell.Interop;
+using System;
+using System.Diagnostics;
+using System.Runtime.InteropServices;
+using System.Threading;
+using Task = System.Threading.Tasks.Task;
+
+namespace CombineFilesVSExtension
+{
+    [PackageRegistration(UseManagedResourcesOnly = true, AllowsBackgroundLoading = true)]
+    [InstalledProductRegistration("Combine Files", "Allows combining selected files via a context menu command.", "1.0.0")]
+    [ProvideMenuResource("Menus.ctmenu", 1)]
+    [Guid(Guids.PackageGuidString)]
+    [ProvideOptionPage(typeof(OptionsPageGrid), "Combine Files", "General Settings", 0, 0, true, SupportsProfiles = true)]
+    [ProvideAutoLoad(VSConstants.UICONTEXT.SolutionExists_string, PackageAutoLoadFlags.BackgroundLoad)]
+    [ProvideAutoLoad(VSConstants.UICONTEXT.FolderOpened_string, PackageAutoLoadFlags.BackgroundLoad)]
+    [ProvideAutoLoad(VSConstants.UICONTEXT.SolutionHasSingleProject_string, PackageAutoLoadFlags.BackgroundLoad)]
+    [ProvideAutoLoad(VSConstants.UICONTEXT.SolutionHasMultipleProjects_string, PackageAutoLoadFlags.BackgroundLoad)]
+    public sealed class CombineFilesPackage : AsyncPackage
+    {
+        public CombineFilesPackage()
+        {
+            Debug.WriteLine($"[{nameof(CombineFilesPackage)}] Constructor called.");
+        }
+
+        protected override async Task InitializeAsync(CancellationToken cancellationToken, IProgress<ServiceProgressData> progress)
+        {
+            Debug.WriteLine($"[{nameof(CombineFilesPackage)}] InitializeAsync - START.");
+            await this.JoinableTaskFactory.SwitchToMainThreadAsync(cancellationToken);
+            Debug.WriteLine($"[{nameof(CombineFilesPackage)}] InitializeAsync - Switched to Main thread.");
+
+            Debug.WriteLine($"[{nameof(CombineFilesPackage)}] InitializeAsync - Initializing CombineFilesCommand.");
+            await CombineFilesCommand.InitializeAsync(this); 
+            Debug.WriteLine($"[{nameof(CombineFilesPackage)}] InitializeAsync - CombineFilesCommand initialization called.");
+
+            Debug.WriteLine($"[{nameof(CombineFilesPackage)}] InitializeAsync - END.");
+        }
+
+        public OptionsPageGrid GeneralOptions
+        {
+            get
+            {
+                return (OptionsPageGrid)GetDialogPage(typeof(OptionsPageGrid));
+            }
+        }
+    }
+}

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CommandTable xmlns="http://schemas.microsoft.com/VisualStudio/2005-10-18/CommandTable" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+	<Extern href="stdidcmd.h"/>
+	<Extern href="vsshlids.h"/>
+
+	<Commands package="guidCombineFilesPackage">
+		<Groups>
+			<Group guid="guidCombineFilesCommandSet" id="MyMenuGroup" priority="0x0F00">
+				<!-- Primary parent: Solution Explorer item context menu -->
+				<Parent guid="guidSHLMainMenu" id="IDM_VS_CTXT_ITEMNODE"/>
+			</Group>
+		</Groups>
+
+		<Buttons>
+			<Button guid="guidCombineFilesCommandSet" id="CombineFilesCommandId" priority="0x0100" type="Button">
+				<Parent guid="guidCombineFilesCommandSet" id="MyMenuGroup" />
+				<CommandFlag>DynamicVisibility</CommandFlag>
+				<CommandFlag>DefaultDisabled</CommandFlag>
+				<Strings>
+					<ButtonText>Combine Files</ButtonText>
+					<ToolTipText>Combines the selected files.</ToolTipText>
+				</Strings>
+			</Button>
+		</Buttons>
+	</Commands>
+
+	<CommandPlacements>
+		<CommandPlacement guid="guidCombineFilesCommandSet" id="MyMenuGroup" priority="0x0F00">
+			<!-- Folder view item context menu -->
+			<Parent guid="guidWorkspaceContextMenu" id="idWorkspaceContextNodesMenu"/>
+		</CommandPlacement>
+	</CommandPlacements>
+
+	<Symbols>
+		<GuidSymbol name="guidCombineFilesPackage" value="{3E55CBED-F57C-465A-BC58-0B0AF6427AC4}" />
+
+		<GuidSymbol name="guidCombineFilesCommandSet" value="{11772DCF-9E2C-4621-9211-5149A3AD700E}">
+			<IDSymbol name="MyMenuGroup" value="0x1020" />
+			<IDSymbol name="CombineFilesCommandId" value="0x0100" />
+		</GuidSymbol>
+		<GuidSymbol name="guidWorkspaceContextMenu" value="{CFB400F1-5C60-4F3C-856E-180D28DEF0B7}">
+			<IDSymbol name="idWorkspaceContextNodesMenu" value="0x0002" />
+		</GuidSymbol>
+	</Symbols>
+</CommandTable>
