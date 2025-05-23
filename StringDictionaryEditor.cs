@@ -21,13 +21,11 @@ namespace CombineFilesVSExtension
                 return value;
             }
 
-            // Display a form as a dialog.
             IWindowsFormsEditorService editorService = (IWindowsFormsEditorService)provider.GetService(typeof(IWindowsFormsEditorService));
             if (editorService == null)
             {
                 return value;
             }
-
       
             Dictionary<string, string> currentDictionary = value as Dictionary<string, string>;
             if (currentDictionary == null)

@@ -7,7 +7,7 @@
 	<Commands package="guidCombineFilesPackage">
 		<Groups>
 			<Group guid="guidCombineFilesCommandSet" id="MyMenuGroup" priority="0x0F00">
-				<!-- Primary parent: Solution Explorer item context menu -->
+				<!-- Solution Explorer item context menu -->
 				<Parent guid="guidSHLMainMenu" id="IDM_VS_CTXT_ITEMNODE"/>
 			</Group>
 		</Groups>

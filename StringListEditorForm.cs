@@ -12,15 +12,13 @@ namespace CombineFilesVSExtension
         public StringListEditorForm(IEnumerable<string> initialList, string title = "Edit List")
         {
             InitializeComponent();
-            this.Text = title; // Set the window title
+            this.Text = title;
             EditedList = initialList != null ? new List<string>(initialList) : new List<string>();
-            // Populate TextBox, ensuring Environment.NewLine is used for display
             textBoxEntries.Lines = EditedList.ToArray();
         }
 
         private void btnOK_Click(object sender, EventArgs e)
         {
-            // Get lines, filter out empty/whitespace-only lines, and trim
             EditedList = textBoxEntries.Lines
                                      .Where(l => !string.IsNullOrWhiteSpace(l))
                                      .Select(l => l.Trim())
@@ -35,7 +33,6 @@ namespace CombineFilesVSExtension
             this.Close();
         }
 
-        // ----- Manually added designer code (or use the WinForms designer) -----
         private System.ComponentModel.IContainer components = null;
         private TextBox textBoxEntries;
         private Button btnOK;
@@ -64,7 +61,7 @@ namespace CombineFilesVSExtension
             this.lblInstructions.AutoSize = true;
             this.lblInstructions.Location = new System.Drawing.Point(12, 9);
             this.lblInstructions.Name = "lblInstructions";
-            this.lblInstructions.Size = new System.Drawing.Size(130, 13); // Adjust size/text as needed
+            this.lblInstructions.Size = new System.Drawing.Size(130, 13);
             this.lblInstructions.TabIndex = 3;
             this.lblInstructions.Text = "Enter one item per line:";
             // 
@@ -73,13 +70,13 @@ namespace CombineFilesVSExtension
             this.textBoxEntries.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBoxEntries.Location = new System.Drawing.Point(12, 28); // Adjusted Y for label
+            this.textBoxEntries.Location = new System.Drawing.Point(12, 28);
             this.textBoxEntries.Multiline = true;
             this.textBoxEntries.Name = "textBoxEntries";
             this.textBoxEntries.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.textBoxEntries.Size = new System.Drawing.Size(360, 192); // Adjusted height
+            this.textBoxEntries.Size = new System.Drawing.Size(360, 192); 
             this.textBoxEntries.TabIndex = 0;
-            this.textBoxEntries.AcceptsReturn = true; // Allow new lines
+            this.textBoxEntries.AcceptsReturn = true; 
             // 
             // btnOK
             // 
@@ -122,7 +119,7 @@ namespace CombineFilesVSExtension
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "Edit List"; // Default title, will be overridden
+            this.Text = ""; 
             this.ResumeLayout(false);
             this.PerformLayout();
         }

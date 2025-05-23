@@ -40,7 +40,10 @@ namespace CombineFilesVSExtension
             Debug.WriteLine($"[{nameof(CombineFilesCommand)}] Constructor: Command added with ID {menuCommandID}.");
         }
 
-        public static CombineFilesCommand Instance { get; private set; }
+        public static CombineFilesCommand Instance { 
+            get; 
+            private set;
+        }
 
         public static async Task InitializeAsync(AsyncPackage package)
         {
@@ -71,7 +74,7 @@ namespace CombineFilesVSExtension
             ThreadHelper.ThrowIfNotOnUIThread();
             if (hierarchy == null) return null;
             string filePath = null;
-            // Try VSHPROPID_SaveName first (often reliable for files on disk)
+            // Try VSHPROPID_SaveName first
             if (ErrorHandler.Succeeded(hierarchy.GetProperty(itemId, (int)__VSHPROPID.VSHPROPID_SaveName, out object saveNameObj)) &&
                 saveNameObj is string saveNameStr && !string.IsNullOrEmpty(saveNameStr) &&
                 File.Exists(saveNameStr) && !File.GetAttributes(saveNameStr).HasFlag(FileAttributes.Directory))
@@ -103,7 +106,7 @@ namespace CombineFilesVSExtension
                     filePath = canonicalName;
                 }
                 // Handle case for Folder View where canonicalName might be relative to the opened folder
-                else if (_dte?.Solution != null && string.IsNullOrEmpty(Path.GetExtension(_dte.Solution.FullName)) && Directory.Exists(_dte.Solution.FullName)) // Check if a folder is open
+                else if (_dte?.Solution != null && string.IsNullOrEmpty(Path.GetExtension(_dte.Solution.FullName)) && Directory.Exists(_dte.Solution.FullName))
                 {
                     string potentialPath = Path.Combine(_dte.Solution.FullName, canonicalName.TrimStart(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar));
                     if (File.Exists(potentialPath) && !File.GetAttributes(potentialPath).HasFlag(FileAttributes.Directory))
@@ -278,7 +281,7 @@ namespace CombineFilesVSExtension
                         content = $"Error reading file '{fileName}': {ex.Message}";
                     }
 
-                    string fileType = "text"; // Default
+                    string fileType = "text";
                     foreach (var typeMatch in options.TypeMatching ?? new Dictionary<string, string>())
                     {
                         if (WildcardMatcher.Matches(typeMatch.Key, fileName)) 
@@ -337,7 +340,7 @@ namespace CombineFilesVSExtension
             catch (Exception ex)
             {
                 Debug.WriteLine($"[{nameof(ExecuteCoreAsync)}] Unhandled exception in ExecuteCoreAsync: {ex}");
-                // Ensure we are on the main thread before showing a dialog
+
                 await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync(_package.DisposalToken);
                 VsShellUtilities.ShowMessageBox(
                     _package,

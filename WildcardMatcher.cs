@@ -24,7 +24,6 @@ namespace CombineFilesVSExtension
             string normalizedPattern = pattern.Replace(Path.DirectorySeparatorChar, '/').Replace(Path.AltDirectorySeparatorChar, '/');
             string normalizedText = text.Replace(Path.DirectorySeparatorChar, '/').Replace(Path.AltDirectorySeparatorChar, '/');
 
-            // Determine if the (normalized) pattern is intended to be a path pattern
             bool isPathPattern = normalizedPattern.Contains("/");
 
             string textToMatchAgainstPattern;

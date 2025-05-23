@@ -1,15 +1,8 @@
 ﻿using Microsoft.VisualStudio.Shell;
 using System;
-using System.Collections.Generic; 
-using System.ComponentModel;
-using Microsoft.VisualStudio.Shell;
-using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-// Ensure this using directive is present for StringArrayEditor:
-using System.Windows.Forms.Design; // For StringArrayEditor
-using System.Drawing.Design; // For UITypeEditor, MultilineStringEditor
-using System.ComponentModel.Design; 
+using System.ComponentModel.Design;
 using System.Drawing.Design;
 
 namespace CombineFilesVSExtension
@@ -29,9 +22,9 @@ namespace CombineFilesVSExtension
             "");
 
         private List<string> _outputFilesPriority = new List<string> {
-            "readme*", "*cmake*", "*.csproj", "AssemblyInfo*", "*manifest*", "main.*"
+            "readme*", "AssemblyInfo*", "*manifest*", "main.*"
         };
-        private List<string> _outputExcludedFiles = new List<string> { "license*", ".git*" };
+        private List<string> _outputExcludedFiles = new List<string> { "license*", ".git*", "cpp.hint" };
 
         private Dictionary<string, string> _TypeMatching = new Dictionary<string, string>()
         {
@@ -101,11 +94,9 @@ namespace CombineFilesVSExtension
         }
 
 
-
         [Category("Combine Files Settings")]
         [DisplayName("Priority files")]
         [Description("If these files are in the selection, they will be outputted first. (all else are in order of selection) If multiple prioritised files are found, they are placed in order defined here. Wildcards (*, ?) supported. ")]
-        //[TypeConverter(typeof(StringArrayConverter))]
 
         [TypeConverter(typeof(StringListConverter))] 
         [Editor(typeof(StringListEditor), typeof(UITypeEditor))] 
@@ -121,8 +112,7 @@ namespace CombineFilesVSExtension
         [DisplayName("Excluded files")]
         [Description("If these files are in the selection, they will be excluded. Wildcards (*, ?) supported. ")]
         [TypeConverter(typeof(StringListConverter))]
-        [Editor(typeof(StringListEditor), typeof(UITypeEditor))] // Apply the custom editor
-        //[TypeConverter(typeof(StringArrayConverter))]
+        [Editor(typeof(StringListEditor), typeof(UITypeEditor))] 
         public List<string> ExcludeFiles
         {
             get { return _outputExcludedFiles; }
