@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
     <Metadata>
-        <Identity Id="CombineFilesVSExtension.liampatel.3E55CBED-F57C-465A-BC58-0B0AF6427AC4" Version="1.0.1" Language="en-US" Publisher="Liam Patel" />
+        <Identity Id="CombineFilesVSExtension.liampatel.3E55CBED-F57C-465A-BC58-0B0AF6427AC4" Version="1.0.2" Language="en-US" Publisher="Liam Patel" />
         <DisplayName>Combine Files</DisplayName>
         <Description xml:space="preserve">Allows you to select multiple files, right click and press Combine Files to print the combined contents to the output. You can also use templates to determine how the files should be combined.</Description>
         <Tags>combine, files, merge, utility, text</Tags>
