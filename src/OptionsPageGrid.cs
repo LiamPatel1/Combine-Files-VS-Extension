@@ -10,10 +10,8 @@ namespace CombineFilesVSExtension
 {
     public class OptionsPageGrid : DialogPage
     {
-        // Initialize with a standard, case-sensitive dictionary.
         private Dictionary<string, string> _typeMatching = new Dictionary<string, string>();
 
-        // Other fields...
         private string _outputHeader = "";
         private string _outputFooter = "";
         private string _outputTemplate = "";
@@ -39,8 +37,7 @@ namespace CombineFilesVSExtension
             }
         }
 
-        // In GetDefaultTypeMatching, remove the StringComparer
-        private static Dictionary<string, string> GetDefaultTypeMatching() => new Dictionary<string, string>() // <-- REMOVED COMPARER
+        private static Dictionary<string, string> GetDefaultTypeMatching() => new Dictionary<string, string>() 
         {
             { "*.feature", "Cucumber"},{ "*.abap", "abap"},{ "*.adb", "ada"},{ "*.ads", "ada"},{ "*.ada", "ada"},
             { "*.ahk", "ahk"},{ "*.ahkl", "ahk"}, { ".htaccess", "apacheconf"},{ "apache.conf", "apacheconf"},{ "apache2.conf", "apacheconf"},
