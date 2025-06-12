@@ -9,7 +9,7 @@ using Task = System.Threading.Tasks.Task;
 namespace CombineFilesVSExtension
 {
     [PackageRegistration(UseManagedResourcesOnly = true, AllowsBackgroundLoading = true)]
-    [InstalledProductRegistration("Combine Files", "Allows combining selected files via a context menu command.", "1.0.0")]
+    [InstalledProductRegistration("Combine Files", "Allows you to select multiple files, right click and press Combine Files to print the combined contents to the output. You can also use templates to determine how the files should be combined.", "1.0.3")]
     [ProvideMenuResource("Menus.ctmenu", 1)]
     [Guid(Guids.PackageGuidString)]
     [ProvideOptionPage(typeof(OptionsPageGrid), "Combine Files", "General Settings", 0, 0, true, SupportsProfiles = true)]
