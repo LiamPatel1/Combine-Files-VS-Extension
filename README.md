@@ -1,4 +1,4 @@
-# Combine Files VS2022 Extension
+# Combine Files Extension for Visual Studio
 
 Allows you to combine the contents of files together and output the result. To do this, select the desired files and right click, press "Combine Files". The output will be in the "Output" pane under "Combine Files Output".  Works for solutions and folder views.
 
