@@ -95,7 +95,15 @@ namespace CombineFilesVSExtension
                      dteProjectItem.Kind == EnvDTE.Constants.vsProjectItemKindPhysicalFile)
             {
                 try { string path = dteProjectItem.Properties.Item("FullPath").Value.ToString(); if (!string.IsNullOrEmpty(path) && File.Exists(path) && !File.GetAttributes(path).HasFlag(FileAttributes.Directory)) filePath = path; } catch { /*ignore*/ }
-                if (string.IsNullOrEmpty(filePath)) { try { if (dteProjectItem.FileCount > 0) { string path = dteProjectItem.FileNames[1]; if (!string.IsNullOrEmpty(path) && File.Exists(path) && !File.GetAttributes(path).HasFlag(FileAttributes.Directory)) filePath = path; } } catch { /*ignore*/ } }
+                if (string.IsNullOrEmpty(filePath)) { 
+                    try { 
+                        if (dteProjectItem.FileCount > 0) { 
+                            string path = dteProjectItem.FileNames[1];
+                            if (!string.IsNullOrEmpty(path) && File.Exists(path) && !File.GetAttributes(path).HasFlag(FileAttributes.Directory)) filePath = path; 
+                        } 
+                    } 
+                    catch { /*ignore*/ } 
+                }
             }
             // Try GetCanonicalName (often works for Folder View items)
             else if (ErrorHandler.Succeeded(hierarchy.GetCanonicalName(itemId, out string canonicalName)) &&
@@ -274,6 +282,15 @@ namespace CombineFilesVSExtension
                     try
                     {
                         content = await Task.Run(() => File.ReadAllText(absPath));
+                        if (string.IsNullOrEmpty(content))
+                        {
+                            Debug.WriteLine($"[{nameof(ExecuteCoreAsync)}] WARNING: File '{absPath}' read as EMPTY");
+ 
+                        }
+                        else
+                        {
+                            Debug.WriteLine($"[{nameof(ExecuteCoreAsync)}] Successfully read {content.Length} characters from '{absPath}'");
+                        }
                     }
                     catch (Exception ex)
                     {
@@ -329,10 +346,16 @@ namespace CombineFilesVSExtension
                         return fullMacroTag; // Return original macro if not found
                     });
 
+                    Debug.WriteLine($"[{nameof(ExecuteCoreAsync)}] Templated output for '{fileData.RelativePath}' (Length: {templatedOutput.Length}):\n---START TEMPLATED OUTPUT---\n{templatedOutput}\n---END TEMPLATED OUTPUT---");
+
                     outputBuilder.AppendLine(templatedOutput);
                 }
 
                 if (!string.IsNullOrEmpty(options.OutputFooter)) outputBuilder.AppendLine(options.OutputFooter);
+
+                string finalOutputToPane = outputBuilder.ToString();
+                Debug.WriteLine($"[{nameof(ExecuteCoreAsync)}] Final combined output string length: {finalOutputToPane.Length}");
+                Debug.WriteLine($"[{nameof(ExecuteCoreAsync)}] Final combined output (first 500 chars):\n---START FINAL OUTPUT---\n{finalOutputToPane.Substring(0, Math.Min(finalOutputToPane.Length, 500))}\n---END FINAL OUTPUT---");
 
                 await WriteToOutputPaneAsync(outputBuilder.ToString());
                 Debug.WriteLine($"[{nameof(ExecuteCoreAsync)}] Execute - END. Files combined: {sortedFiles.Count}");

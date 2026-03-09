@@ -14,17 +14,13 @@ namespace CombineFilesVSExtension
 
         private string _outputHeader = "";
         private string _outputFooter = "";
-        private string _outputTemplate = "";
-        private List<string> _outputFilesPriority = new List<string>();
-        private List<string> _outputExcludedFiles = new List<string>();
+        private string _outputTemplate = GetDefaultTemplate();
+        private List<string> _outputFilesPriority = GetDefaultPriorityFiles();
+        private List<string> _outputExcludedFiles = GetDefaultExcludedFiles();
 
         protected override void OnActivate(CancelEventArgs e)
         {
             base.OnActivate(e);
-
-            if (string.IsNullOrEmpty(_outputTemplate)) { _outputTemplate = GetDefaultTemplate(); }
-            if (!_outputFilesPriority.Any()) { _outputFilesPriority.AddRange(GetDefaultPriorityFiles()); }
-            if (!_outputExcludedFiles.Any()) { _outputExcludedFiles.AddRange(GetDefaultExcludedFiles()); }
 
             if (!_typeMatching.Any())
             {
@@ -72,7 +68,6 @@ namespace CombineFilesVSExtension
             { "*.xslt", "xslt"},{ "*.yaml", "yaml"},{ "*.yml", "yaml"},{ "*.vsct", "xml"},{ "*.csproj", "xml"},{ "*.vsixmanifest", "xml"}
         };
 
-        #region Boilerplate
         public override void ResetSettings()
         {
             base.ResetSettings();
@@ -84,7 +79,7 @@ namespace CombineFilesVSExtension
             _typeMatching = GetDefaultTypeMatching();
         }
         private static string GetDefaultTemplate() => String.Join(Environment.NewLine, "**{{relative_filepath}}**:", "```{{type}}", "{{text}}", "```", "");
-        private static List<string> GetDefaultPriorityFiles() => new List<string> { "readme.*", "*.csproj", "*cargo*", "*cmake*", "main.*" };
+        private static List<string> GetDefaultPriorityFiles() => new List<string> { "readme*", "*.csproj", "*cargo*", "*cmake*", "main.*" };
         private static List<string> GetDefaultExcludedFiles() => new List<string> { ".gitignore", ".gitattributes", "LICENSE*" };
 
         [Category("Combine Files Settings")]
@@ -126,7 +121,5 @@ namespace CombineFilesVSExtension
         [Editor(typeof(StringDictionaryEditor), typeof(UITypeEditor))]
         public Dictionary<string, string> TypeMatching { get => _typeMatching; set => _typeMatching = value; }
 
-
-        #endregion
     }
 }
